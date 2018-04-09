@@ -1,13 +1,9 @@
 <?php
 	// => Parametros de conexao do Bco.de Dados
-	//define( 'MYSQL_HOST', 'localhost' );
-	//define( 'MYSQL_USER', 'daniel' );
-	//define( 'MYSQL_PASSWORD', 'daniel' );
-	//define( 'MYSQL_DB_NAME', 'igrejaonline' );
-	//$MYSQL_HOST = 'localhost';
-	//$MYSQL_USER = 'daniel';
-	//$MYSQL_PASSWORD = 'daniel';
-	//$MYSQL_DB_NAME = 'igrejaonline';
+	define( 'MYSQL_HOST', 'localhost' );
+	define( 'MYSQL_USER', 'daniel' );
+	define( 'MYSQL_PASSWORD', 'daniel' );
+	define( 'MYSQL_DB_NAME', 'igrejaonline' );
 	
 	// => Obter os valores dos campos login e senha do form
 	$login = $_POST["login"];
@@ -25,7 +21,7 @@
 	echo "<P>[login.php] => CHECKPOINT 0 !!!</P>";
 
 	// Conecta-se ao banco de dados MySQL
-	$mysqli = new mysqli('localhost', 'root', 'root', 'igrejaonline');
+	$mysqli = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
 	// Caso algo tenha dado errado, exibe uma mensagem de erro
 	if (mysqli_connect_errno()) trigger_error(mysqli_connect_error());
 
