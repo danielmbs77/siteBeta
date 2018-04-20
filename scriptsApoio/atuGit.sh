@@ -21,6 +21,8 @@ then
 					echo "[atuGit] => Nao ha diferenca entre os arquivos homonimos $nomeItem !!!"
 				else
 					echo "[atuGit] => Ha diferenca entre os arquivos homonimos $nomeItem !!!"
+					cp /srv/siteBeta/$nomeItem ./$nomeItem
+					echo "[atuGit] => Arquivos homonimos $nomeItem equalizados !!!"
 				fi
 			fi
 		fi
@@ -39,6 +41,8 @@ then
 						echo "[atuGit] => Nao ha diferenca entre os arquivos homonimos $nomeItem/$nomeArq !!!"
 					else
 						echo "[atuGit] => Ha diferenca entre os arquivos homonimos $nomeItem/$nomeArq !!!"
+						cp /srv/siteBeta/$nomeItem/$nomeArq ./$nomeArq 
+						echo "[atuGit] => Arquivos homonimos $nomeItem/$nomeArq equalizados !!!"
 					fi
 				fi
 			done
