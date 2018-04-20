@@ -6,42 +6,33 @@ define( 'MYSQL_USER', 'daniel' );
 define( 'MYSQL_PASSWORD', 'daniel' );
 define( 'MYSQL_DB_NAME', 'igrejaonline' );
 
-// => Obtem usuario e senha da linha de comando
+// => Obtem os arquivos *.json das duas principais entidades necessarias para a criacao do "workspace" inicial
 echo "[criaWorkspaceInicial.php] => BEGIN !!!";
-if($argc == 4)
+if($argc == 3)
 {
-	// => Obter os parametros <login> , <senha> e <id>
-	$usuario=$argv[1];
-	$senha=$argv[2];
-	$id=$argv[3];
+	// => Obter os parametros <arqIg.json> e <arqMemb.json>
+	$arqIg=$argv[1];
+	$arqMemb=$argv[2];
 
 	// => Log de teste dos parametros
-	echo "\n[criaWorkspaceInicial.php] => USUARIO[".$usuario."] | SENHA[".$senha."] | ID[".$id."] FORNECIDOS !!!\n";
-	echo "\n[criaWorkspaceInicial.php] => APLICANDO HASH A SENHA...\n";
+	echo "\n[criaWorkspaceInicial.php] => ARQIG[".$arqIg."] | ARQMEMB[".$arqMemb."] FORNECIDOS !!!\n";
 
-	// => Gerando o Hash da senha fornecida
-	$senhaCrypt = password_hash($senha, PASSWORD_DEFAULT);
-	echo "\n[criaWorkspaceInicial.php] => SENHA HASH[".$senhaCrypt."] !!!\n";
+	// => Abrir os arquivos e popular objetos Json respectivos
+	$arqIgJson  = file_get_contents($arqIg);
+	$oArqIgJson = json_decode($arqIgJson);
+	
+	$arqMembJson  = file_get_contents($arqMemb);
+	$oArqMembJson = json_decode($arqMembJson);
 
-	// => Conectando no banco para a insercao do registro de usuario
-	echo "\n[criaWorkspaceInicial.php] => CONECTANDO NO BANCO...\n";
-	$mysqli = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB_NAME);
-    if (mysqli_connect_errno()) trigger_error(mysqli_connect_error());
+	// => Logs de verificacao dos objetos Json instanciados
+	echo "\n[criaWorkspaceInicial.php] => CHECK DE OBJS JSON => IG => NOME[".$oArqIgJson->NOME."] | DENOMINACAO[".$oArqIgJson->DENOMINACAO."] | ENDERECO[".$oArqIgJson->ENDERECO."] | NUMERO[".$oArqIgJson->NUMERO."] | BAIRRO[".$oArqIgJson->BAIRRO."] | CIDADE[".$oArqIgJson->CIDADE."] | ESTADO[".$oArqIgJson->ESTADO."] | CEP[".$oArqIgJson->CEP."] | PAIS[".$oArqIgJson->PAIS."] | CATEGORIA[".$oArqIgJson->CATEGORIA."] | HISTORICO[".$oArqIgJson->HISTORICO."] !!!\n";
+	
+	echo "\n[criaWorkspaceInicial.php] => CHECK DE OBJS JSON => MEMB => ID_IG[".$oArqMembJson->ID_IG."] | NOME[".$oArqMembJson->NOME."] | STATUS[".$oArqMembJson->STATUS."] | CARGO[".$oArqMembJson->CARGO."] | SEXO[".$oArqMembJson->SEXO."] | DATA_NASCIMENTO[".$oArqMembJson->DATA_NASCIMENTO."] | ESTADO_CIVIL[".$oArqMembJson->ESTADO_CIVIL."] | ENDERECO[".$oArqMembJson->ENDERECO."] | NUMERO[".$oArqMembJson->NUMERO."] | BAIRRO[".$oArqMembJson->BAIRRO."] | CIDADE[".$oArqMembJson->CIDADE."] | ESTADO[".$oArqMembJson->ESTADO."] | CEP[".$oArqMembJson->CEP."] | PAIS[".$oArqMembJson->PAIS."] | HISTORICO [".$oArqMembJson->HISTORICO."] !!!\n";
 
-    // => Efetuar o INSERT do usuario passado com a senha criptografada
-    $sql = "INSERT INTO usuario (id_igreja, id_membro, login, senha, perfil) VALUES (".$id.",1,'".$usuario."','".$senhaCrypt."','ADM')";
-    $query = $mysqli->query($sql);
-	if($query)
-	{	
-		echo "\n[criaWorkspaceInicial.php] => INSERCAO DE USUARIO REALIZADA COM SUCESSO !!!\n";
-	}
-	else
-	{
-		echo "\n[criaWorkspaceInicial.php] => INSERCAO DE USUARIO NAO REALIZADA !!!\n";
-	}
+	// => Insercoes no Bco. a partir dos objetos Json instanciados - TODO
 }
 else
 {
-	echo "\n[criaWorkspaceInicial.php] => Parametros <usuario>, <senha> e <id> devem ser fornecidos !!!\n";
+	echo "\n[criaWorkspaceInicial.php] => Parametros <arqIg.json> e <arqMemb.json> devem ser fornecidos !!!\n";
 }
 echo "\n[criaWorkspaceInicial.php] => END !!!\n";
