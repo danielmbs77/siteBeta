@@ -44,4 +44,4 @@ else
 {
 	echo "\n[geraSenhaHash.php] => Parametros <usuario>, <senha> e <id> devem ser fornecidos !!!\n";
 }
-echo "[geraSenhaHash.php] => END !!!";
+echo "\n[geraSenhaHash.php] => END !!!\n";
